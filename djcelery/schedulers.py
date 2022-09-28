@@ -163,7 +163,7 @@ class DatabaseScheduler(Scheduler):
                 pass  # not in transaction management.
 
             last, ts = self._last_timestamp, self.Changes.last_change()
-        except DATABASE_ERRORS, exc:
+        except DATABASE_ERRORS as exc:
             warn(RuntimeWarning('Database gave error: %r' % (exc, )))
             return False
         try:
@@ -198,7 +198,7 @@ class DatabaseScheduler(Scheduler):
                 raise
             else:
                 transaction.commit()
-        except DATABASE_ERRORS, exc:
+        except DATABASE_ERRORS as exc:
             # retry later
             self._dirty |= _tried
             warn(RuntimeWarning('Database error while sync: %r' % (exc, )))
@@ -208,7 +208,7 @@ class DatabaseScheduler(Scheduler):
         for name, entry in dict_.items():
             try:
                 s[name] = self.Entry.from_entry(name, **entry)
-            except Exception, exc:
+            except Exception as exc:
                 self.logger.error(
                     'Could not add entry %r to database schedule: %r. '
                     'Contents: %r' % (name, exc, entry))
