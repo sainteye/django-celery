@@ -8,7 +8,7 @@ from django.contrib.admin import helpers
 from django.contrib.admin.views import main as main_views
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.utils.encoding import force_unicode
+from django.utils.encoding import force_text
 from django.utils.html import escape
 from django.utils.translation import ugettext_lazy as _
 
@@ -175,7 +175,7 @@ class TaskMonitor(ModelMonitor):
         context = {
             'title': _('Rate limit selection'),
             'queryset': queryset,
-            'object_name': force_unicode(opts.verbose_name),
+            'object_name': force_text(opts.verbose_name),
             'action_checkbox_name': helpers.ACTION_CHECKBOX_NAME,
             'opts': opts,
             'app_label': app_label,
